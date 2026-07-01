@@ -14,7 +14,7 @@ target:
   extra_docs: []
 
 platforms:
-  enabled: [claude-code, openclaw, codex, generic]
+  enabled: [claude-code, openclaw, codex, hermes, generic]
   primary: claude-code
 
 eval:

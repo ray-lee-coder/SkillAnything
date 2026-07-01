@@ -1,0 +1,22 @@
+{# Hermes Agent platform adapter template.
+   Generates a SKILL.md with Hermes-specific frontmatter.
+   Hermes format: YAML frontmatter with name, description, tags, source,
+   plus optional allowed-tools. No hooks. #}
+---
+name: {{ skill_name }}
+description: >
+  {{ description }}
+{% if allowed_tools %}
+allowed-tools:
+{% for tool in allowed_tools %}
+  - {{ tool }}
+{% endfor %}
+{% endif %}
+{% if tags %}
+tags: [{{ tags }}]
+{% endif %}
+{% if source %}
+source: {{ source }}
+{% endif %}
+---
+{{ skill_body }}

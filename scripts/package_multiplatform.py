@@ -306,7 +306,7 @@ def package(
 
 
 def main() -> None:
-    all_platforms = ["claude-code", "openclaw", "codex", "generic"]
+    all_platforms = ["claude-code", "openclaw", "codex", "hermes", "generic"]
 
     parser = argparse.ArgumentParser(
         description="Package a skill for multiple platforms.",

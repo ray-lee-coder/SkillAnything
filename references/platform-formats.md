@@ -312,18 +312,80 @@ jq-helper.skill   (zip archive)
 
 ---
 
+## Hermes Agent
+
+- **Schema**: `http://hermes-agent.nousresearch.com/docs`
+- **Location**: `~/.hermes/skills/<skill-name>/` (external_dirs also supported)
+
+### Frontmatter Fields
+
+| Field | Required | Type | Description |
+|-------|----------|------|-------------|
+| `name` | yes | string | Skill identifier (kebab-case) |
+| `description` | yes | string | Trigger description for the agent harness |
+| `tags` | no | list | Categorization tags (YAML inline array `[a, b]`) |
+| `source` | no | string | Source attribution URL |
+| `allowed-tools` | no | list | Tools the skill is allowed to use |
+
+Hermes does not support hooks in SKILL.md frontmatter. Hooks are configured externally via `config.yaml` or the `hermes config` CLI.
+
+### Example
+
+```markdown
+---
+name: jq-helper
+description: >
+  Help users write and debug jq expressions for JSON filtering and transformation.
+  Trigger when the user mentions jq, JSON filtering, JSON transformation, or needs
+  to parse complex JSON structures from the command line.
+tags: [json, jq, filtering]
+source: https://github.com/AgentSkillOS/SkillAnything
+allowed-tools:
+- Bash
+- Read
+- Write
+---
+# jq Helper
+...
+```
+
+### Directory Layout
+
+```
+~/.hermes/skills/jq-helper/
+├── SKILL.md
+├── scripts/
+│   └── validate_jq.py
+├── references/
+│   └── jq-patterns.md
+└── assets/
+├── .dev/                     # Development assets (optional, not loaded)
+│   ├── notes/
+│   ├── evals/
+│   └── references/
+```
+
+### Hermes-specific Notes
+
+- Hermes loads skills via `skill_view()` and `skill_manage()` tools, or directly when a skill name matches a conversation context.
+- Skills can be configured via `external_dirs` in `config.yaml` for cross-filesystem loading.
+- The `.dev/` directory is a Hermes convention for development-time assets (notes, evals, archives) — it is NOT loaded by the agent at runtime.
+- Tag-based discovery: `tags` field in frontmatter enables skill discovery and categorization.
+
+---
+
 ## Cross-Platform Compatibility Matrix
 
-| Feature | Claude Code | OpenClaw | Codex | Generic |
+| Feature | Claude Code | OpenClaw | Codex | Hermes | Generic |
 |---------|------------|----------|-------|---------|
-| SKILL.md frontmatter | yes | yes | yes | yes |
-| Hooks in frontmatter | yes | no | no | no |
-| External hooks config | no | yes (settings.json) | no | no |
-| Extra config files | no | no | yes (openai.yaml) | no |
-| Icon assets | no | no | yes | no |
-| Zip packaging | no | no | no | yes |
-| Workspace scoping | yes (project) | yes (workspace) | no | n/a |
-| Global install | yes | yes | yes | n/a |
+| SKILL.md frontmatter | yes | yes | yes | yes | yes |
+| Hooks in frontmatter | yes | no | no | no | no |
+| External hooks config | no | yes (settings.json) | no | no | no |
+| Extra config files | no | no | yes (openai.yaml) | no | no |
+| Icon assets | no | no | yes | no | no |
+| Zip packaging | no | no | no | no | yes |
+| Workspace scoping | yes (project) | yes (workspace) | no | yes (external_dirs) | n/a |
+| Global install | yes | yes | yes | yes | n/a |
 
 ---
 

@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Claude_Code-Compatible-7C3AED?style=flat-square" alt="Claude Code"/>
   <img src="https://img.shields.io/badge/OpenClaw-Compatible-FF6B35?style=flat-square" alt="OpenClaw"/>
   <img src="https://img.shields.io/badge/Codex-Compatible-10A37F?style=flat-square" alt="Codex"/>
+  <img src="https://img.shields.io/badge/Hermes-Agent-6B7280?style=flat-square" alt="Hermes Agent"/>
 </p>
 
 <h1 align="center">SkillAnything</h1>
@@ -44,6 +45,7 @@ analysis.json                                                          dist/
                                                                         ├── claude-code/
                                                                         ├── openclaw/
                                                                         ├── codex/
+                                                                        ├── hermes/
                                                                         └── generic/
 ```
 
@@ -62,6 +64,9 @@ git clone https://github.com/AgentSkillOS/SkillAnything.git ~/.openclaw/skills/s
 
 # Codex
 git clone https://github.com/AgentSkillOS/SkillAnything.git ~/.codex/skills/skill-anything
+
+# Hermes Agent
+git clone https://github.com/AgentSkillOS/SkillAnything.git ~/.hermes/skills/skill-anything
 ```
 
 ### Use
@@ -98,7 +103,7 @@ python -m scripts.run_eval --eval-set evals.json --skill-path ./out/my-skill
 python -m scripts.run_loop --eval-set trigger-evals.json --skill-path ./out/my-skill --model claude-sonnet-4-20250514
 
 # Phase 7: Package for all platforms
-python -m scripts.package_multiplatform ./out/my-skill --platforms claude-code,openclaw,codex
+python -m scripts.package_multiplatform ./out/my-skill --platforms claude-code,openclaw,codex,hermes
 ```
 
 ## The 7-Phase Pipeline
@@ -132,12 +137,14 @@ Inspired by [CLI-Anything](https://github.com/HKUDS/CLI-Anything)'s methodology,
 <td align="center"><strong>Claude Code</strong><br/><code>~/.claude/skills/</code></td>
 <td align="center"><strong>OpenClaw</strong><br/><code>~/.openclaw/skills/</code></td>
 <td align="center"><strong>OpenAI Codex</strong><br/><code>~/.codex/skills/</code></td>
+<td align="center"><strong>Hermes Agent</strong><br/><code>~/.hermes/skills/</code></td>
 <td align="center"><strong>Generic</strong><br/><code>.skill</code> zip</td>
 </tr>
 <tr>
 <td align="center">Full support<br/>Hooks in frontmatter</td>
 <td align="center">Full support<br/>External settings.json</td>
 <td align="center">Full support<br/>openai.yaml companion</td>
+<td align="center">Full support<br/>external_dirs compatible</td>
 <td align="center">Full support<br/>Platform-agnostic</td>
 </tr>
 </table>
@@ -198,7 +205,7 @@ Phase 3: Generating SKILL.md + 2 scripts + 1 reference
 Phase 4: Created 5 test cases + 20 trigger queries
 Phase 5: Benchmark: 87% pass rate (vs 42% baseline)
 Phase 6: Description optimized: 18/20 trigger accuracy
-Phase 7: Packaged for claude-code, openclaw, codex, generic
+Phase 7: Packaged for claude-code, openclaw, codex, hermes, generic
 
 Done! Skill at: sa-workspace/dist/
 ```
@@ -235,7 +242,7 @@ pipeline:
   skip_eval: false             # Skip phases 5-6 for rapid prototyping
 
 platforms:
-  enabled: [claude-code, openclaw, codex, generic]
+  enabled: [claude-code, openclaw, codex, hermes, generic]
   primary: claude-code
 
 eval:
